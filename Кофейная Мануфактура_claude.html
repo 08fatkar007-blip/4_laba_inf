@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Кофейная Мануфактура — обжарено на этой неделе</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== Токены: палитра, шрифты ===== */
+:root{
+  --brown:#2b1810; --brown-2:#3d2418; --cream:#f6ecd9; --caramel:#d08a3c; --caramel-d:#a8681f;
+  --bg:#f6ecd9; --surface:#fffaf0; --text:#2b1810; --muted:#6e5646; --line:rgba(43,24,16,.14);
+  --head:'Playfair Display',Georgia,'Times New Roman',serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#1c110b;--surface:#2a1a11;--text:#f6ecd9;--muted:#cdb9a3;--line:rgba(246,236,217,.16)}
+}
+:root[data-theme="dark"]{--bg:#1c110b;--surface:#2a1a11;--text:#f6ecd9;--muted:#cdb9a3;--line:rgba(246,236,217,.16)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1rem/1.65 var(--body)}
+h1,h2,h3{font-family:var(--head);line-height:1.1;margin:0 0 .5em}
+h2{font-size:clamp(1.9rem,6vw,3rem)}
+p{margin:0 0 1em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--caramel);outline-offset:3px}
+.wrap{width:min(1120px,100% - 2.5rem);margin-inline:auto}
+section{padding:4.5rem 0}
+.lead{color:var(--muted);max-width:56ch}
+
+/* ===== Кнопки ===== */
+.btn{display:inline-block;border:0;cursor:pointer;font:600 1rem var(--body);text-decoration:none;
+  background:var(--caramel);color:#2b1810;padding:.85rem 1.6rem;border-radius:999px;
+  transition:transform .2s,background .2s,box-shadow .2s}
+.btn:hover{background:#e29d4f;transform:translateY(-2px);box-shadow:0 8px 20px rgba(208,138,60,.35)}
+.btn.small{padding:.5rem 1.1rem;font-size:.9rem}
+
+/* ===== Плейсхолдеры изображений ===== */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;text-align:center;
+  background:repeating-linear-gradient(45deg,rgba(208,138,60,.12) 0 12px,rgba(208,138,60,.2) 12px 24px);
+  border:2px dashed var(--caramel);border-radius:16px;color:var(--muted);font-size:.8rem;padding:.8rem;width:100%}
+.ph svg{width:36px;height:36px;stroke:var(--caramel);fill:none;stroke-width:1.6}
+
+/* ===== Навигация (фиксированная) ===== */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(43,24,16,.94);backdrop-filter:blur(8px);
+  color:var(--cream);padding-top:env(safe-area-inset-top,0px)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:800 1.15rem var(--head);text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.logo i{width:26px;height:26px;border-radius:50%;background:var(--caramel);display:inline-block;position:relative}
+.logo i::after{content:"";position:absolute;inset:6px 10px;border-radius:50%;background:var(--brown);transform:rotate(25deg)}
+.nav ul{display:none;list-style:none;gap:1.8rem;margin:0;padding:0}
+.nav ul a{text-decoration:none;opacity:.85;transition:opacity .2s,color .2s}
+.nav ul a:hover{opacity:1;color:var(--caramel)}
+.menu-toggle{display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid rgba(246,236,217,.35);border-radius:8px;background:transparent;color:var(--cream);cursor:pointer}
+.menu-toggle span,.menu-toggle span::before,.menu-toggle span::after{display:block;width:18px;height:2px;background:currentColor;position:relative;content:""}
+.menu-toggle span::before,.menu-toggle span::after{position:absolute;left:0}
+.menu-toggle span::before{top:-6px}
+.menu-toggle span::after{top:6px}
+.nav ul.open{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;padding:.5rem 1.25rem 1rem;background:rgba(43,24,16,.98)}
+.nav ul.open a{display:block;padding:.65rem 0}
+
+/* ===== Первый экран ===== */
+.hero{background:var(--brown);color:var(--cream);padding:7.5rem 0 4rem}
+.hero .wrap{display:grid;gap:2.5rem}
+.hero h1{font-size:clamp(2.4rem,9vw,4.8rem);font-weight:800;margin:.4em 0}
+.hero p{color:#e7d6bd;max-width:46ch}
+.pack{max-width:300px;margin-inline:auto;aspect-ratio:3/4;transform:rotate(-3deg);transition:transform .4s}
+.pack:hover{transform:rotate(0) scale(1.03)}
+.pack .ph{height:100%;background-color:var(--brown-2);border-color:var(--caramel)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:3rem;list-style:none;padding:0}
+.stats li{aspect-ratio:1;max-width:150px;margin-inline:auto;width:100%;border:2px solid var(--caramel);border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.2;
+  transition:background .25s}
+.stats li:hover{background:rgba(208,138,60,.18)}
+.stats b{font:800 2rem var(--head);color:var(--caramel)}
+.stats span{font-size:.78rem;color:#e7d6bd;padding:0 .8rem}
+
+/* ===== Путь зерна ===== */
+.steps{display:grid;gap:1.25rem;margin-top:2rem;list-style:none;padding:0;counter-reset:s}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.2rem;position:relative}
+.step .num{position:absolute;top:-14px;left:1.2rem;background:var(--caramel);color:#2b1810;font:800 1.1rem var(--head);
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center}
+.step .ph{height:140px;margin:.8rem 0 1rem}
+.step h3{font-size:1.4rem;margin-bottom:.3em}
+.step ul{margin:0;padding-left:1.1rem;color:var(--muted);font-size:.93rem}
+
+/* ===== Шкала обжарки ===== */
+.roast{background:var(--brown);color:var(--cream)}
+.roast .lead{color:#e7d6bd}
+.bar{height:22px;border-radius:999px;margin:2rem 0 1.5rem;background:linear-gradient(90deg,#c99a63,#a06a35,#6b3e1e,#2a140a);border:1px solid rgba(246,236,217,.3)}
+.levels{display:grid;gap:1rem}
+.level{border-left:4px solid var(--caramel);padding:.4rem 1rem;transition:background .2s}
+.level:hover{background:rgba(246,236,217,.06)}
+.level h3{font-size:1.25rem;margin-bottom:.2em}
+.level p{margin:0;color:#e7d6bd;font-size:.93rem}
+
+/* ===== Каталог ===== */
+.grid{display:grid;gap:1.25rem;margin-top:2rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-6px);box-shadow:0 16px 30px rgba(43,24,16,.18)}
+.card .ph{height:180px;border-radius:0;border-width:0 0 2px}
+.card .body{padding:1.1rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
+.card h3{font-size:1.3rem;margin:0}
+.notes{color:var(--muted);font-size:.92rem;margin:0}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:.8rem}
+.price{font:800 1.3rem var(--head)}
+.weight{color:var(--muted);font-size:.85rem}
+.cart{position:fixed;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:40;background:var(--brown);color:var(--cream);
+  border:2px solid var(--caramel);border-radius:999px;padding:.5rem 1rem;font-weight:600;transition:opacity .2s;text-decoration:none}
+.cart[hidden]{display:none}
+
+/* ===== Отзывы ===== */
+.reviews{display:grid;gap:1.25rem;margin-top:2rem}
+.review{background:var(--surface);border-radius:18px;padding:1.4rem;border:1px solid var(--line);transition:transform .25s}
+.review:hover{transform:translateY(-4px)}
+.review p{font-family:var(--head);font-size:1.12rem;line-height:1.5}
+.review small{color:var(--muted)}
+
+/* ===== Контакты ===== */
+.contact{background:var(--brown);color:var(--cream)}
+.contact h2{font-size:clamp(2.4rem,9vw,5rem);font-weight:800}
+.contact .wrap{display:grid;gap:2.5rem}
+.info p{margin:0 0 .8rem;color:#e7d6bd}
+.info b{color:var(--cream);display:block}
+form{display:grid;gap:.9rem}
+label{font-size:.9rem;display:grid;gap:.3rem}
+input,textarea{font:inherit;padding:.8rem 1rem;border-radius:12px;border:1px solid rgba(246,236,217,.3);
+  background:rgba(246,236,217,.08);color:var(--cream);width:100%}
+input:focus,textarea:focus{border-color:var(--caramel);outline:none}
+#ok{color:var(--caramel);font-weight:600;margin:0}
+
+/* ===== Подвал ===== */
+footer{background:#170d08;color:#cdb9a3;padding:2.5rem 0 calc(2rem + env(safe-area-inset-bottom,0px));font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1rem 2rem;justify-content:space-between}
+footer nav{display:flex;gap:1.2rem;flex-wrap:wrap}
+
+/* ===== Адаптив (mobile-first) ===== */
+@media (min-width:640px){
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .steps,.grid,.reviews{grid-template-columns:repeat(2,1fr)}
+  .levels{grid-template-columns:repeat(4,1fr)}
+}
+@media (min-width:900px){
+  .nav ul{display:flex}
+  .nav ul.open{position:static;flex-direction:row;gap:1.8rem;padding:0;background:transparent}
+  .nav ul.open a{padding:0}
+  .menu-toggle{display:none}
+  .hero .wrap{grid-template-columns:1.3fr 1fr;align-items:center}
+  .stats{grid-column:1/-1}
+  .steps{grid-template-columns:repeat(4,1fr)}
+  .grid,.reviews{grid-template-columns:repeat(3,1fr)}
+  .contact .wrap{grid-template-columns:1fr 1fr}
+  .contact h2{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ===== 1. Навигация ===== -->
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><i aria-hidden="true"></i>Кофейная Мануфактура</a>
+    <ul id="mobile-menu">
+      <li><a href="#path">Путь зерна</a></li>
+      <li><a href="#catalog">Каталог</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+    <a class="btn small" href="#contacts">Заказать</a>
+    <button class="menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu"><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+<!-- ===== 2. Первый экран ===== -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p style="color:var(--caramel);font-weight:600;margin:0">Кофейная Мануфактура</p>
+      <h1>Обжарено на этой неделе. Не на прошлой.</h1>
+      <p>Небольшая обжарочная: берём зелёное зерно из проверенных хозяйств, обжариваем малыми партиями и отправляем в течение двух суток.</p>
+      <a class="btn" href="#catalog">Выбрать кофе</a>
+    </div>
+    <div class="pack">
+      <!-- ИЗОБРАЖЕНИЕ: крафтовая пачка кофе 250 г с датой обжарки на этикетке, тёмный фон, мягкий боковой свет -->
+      <div class="ph" role="img" aria-label="Пачка свежеобжаренного кофе с датой обжарки на этикетке">
+        <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M5 8h14M9 13h6"/></svg>
+        Фото: крафтовая пачка 250 г с датой обжарки на этикетке
+      </div>
+    </div>
+    <ul class="stats">
+      <li><b>12</b><span>стран-поставщиков</span></li>
+      <li><b>48 ч</b><span>от обжарки до отправки</span></li>
+      <li><b>8</b><span>сортов в каталоге</span></li>
+      <li><b>5 лет</b><span>на рынке</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== 3. Путь зерна ===== -->
+<section id="path">
+  <div class="wrap">
+    <h2>Путь зерна</h2>
+    <p class="lead">Четыре шага от кофейного дерева до вашей чашки, и на каждом мы следим за качеством.</p>
+    <ol class="steps">
+      <li class="step"><span class="num">1</span>
+        <!-- ИЗОБРАЖЕНИЕ: склон плантации, сборщик с корзиной спелых красных ягод -->
+        <div class="ph" role="img" aria-label="Кофейная плантация на склоне, сборщик с корзиной ягод"><svg viewBox="0 0 24 24"><path d="M3 20l6-9 4 5 3-4 5 8z"/></svg>Фото: плантация, ручной сбор</div>
+        <h3>Плантация</h3>
+        <ul><li>Ягоды собирают вручную, только спелые.</li><li>Высота участков от 1200 до 2000 м.</li></ul></li>
+      <li class="step"><span class="num">2</span>
+        <!-- ИЗОБРАЖЕНИЕ: барабан печи с горячими зёрнами, пар -->
+        <div class="ph" role="img" aria-label="Обжарочная печь с горячими зёрнами"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Фото: печь, зёрна в момент выгрузки</div>
+        <h3>Обжарка</h3>
+        <ul><li>Партии по 12 кг, профиль под каждый сорт.</li><li>Дегустируем каждую партию.</li></ul></li>
+      <li class="step"><span class="num">3</span>
+        <!-- ИЗОБРАЖЕНИЕ: руки упаковщика, клапан дегазации, наклейка с датой -->
+        <div class="ph" role="img" aria-label="Упаковка зёрен в пачку с клапаном и датой обжарки"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 7V4h8v3"/></svg>Фото: пачка с клапаном и наклейкой даты</div>
+        <h3>Упаковка</h3>
+        <ul><li>Клапан выпускает газ, но не пускает воздух.</li><li>На пачке указана дата обжарки.</li></ul></li>
+      <li class="step"><span class="num">4</span>
+        <!-- ИЗОБРАЖЕНИЕ: чашка чёрного кофе на деревянном столе, утренний свет -->
+        <div class="ph" role="img" aria-label="Чашка свежесваренного кофе на деревянном столе"><svg viewBox="0 0 24 24"><path d="M5 9h12v5a5 5 0 01-5 5h-2a5 5 0 01-5-5zM17 10h2a2 2 0 010 4h-2"/></svg>Фото: чашка кофе, утренний свет</div>
+        <h3>Ваша чашка</h3>
+        <ul><li>Лучший вкус: со 4-го по 21-й день после обжарки.</li><li>Мелите прямо перед заваркой.</li></ul></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== 4. Степень обжарки ===== -->
+<section class="roast" id="roast">
+  <div class="wrap">
+    <h2>Степень обжарки</h2>
+    <p class="lead">От светлой к тёмной: чем дольше обжарка, тем меньше кислинки и больше плотности.</p>
+    <div class="bar" role="img" aria-label="Шкала от светлой обжарки к тёмной"></div>
+    <div class="levels">
+      <div class="level"><h3>Светлая</h3><p>Яркая кислинка, цветочные и ягодные ноты. Для фильтра и чистой чашки.</p></div>
+      <div class="level"><h3>Средняя</h3><p>Баланс сладости и кислотности: карамель, орех, спелое яблоко.</p></div>
+      <div class="level"><h3>Средне-тёмная</h3><p>Густое тело, шоколад и сухофрукты. Хороша для эспрессо с молоком.</p></div>
+      <div class="level"><h3>Тёмная</h3><p>Насыщенная горчинка, жжёный сахар и какао. Для любителей крепкого.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. Каталог ===== -->
+<section id="catalog">
+  <div class="wrap">
+    <h2>Каталог</h2>
+    <p class="lead">Свежая обжарка каждую неделю. Опт от 5 кг: напишите нам в форме ниже.</p>
+    <div class="grid" id="grid"><!-- карточки создаются скриптом внизу --></div>
+  </div>
+</section>
+
+<!-- ===== 6. Отзывы ===== -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Нам пишут</h2>
+    <div class="reviews">
+      <div class="review"><p>«Беру для кофейни третий год. Дата на пачке всегда свежая, гости замечают разницу.»</p><small>Марина, владелица кофейни</small></div>
+      <div class="review"><p>«Заказали в офис пробный набор. Теперь команда спорит, какой сорт брать в следующий раз.»</p><small>Андрей, офис-менеджер</small></div>
+      <div class="review"><p>«Эфиопия пахнет ягодами ещё из пачки. Дома варю в воронке и не нарадуюсь.»</p><small>Ольга, любитель кофе</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. Контакты ===== -->
+<section class="contact" id="contacts">
+  <div class="wrap">
+    <h2>Давайте сварим вместе</h2>
+    <div class="info">
+      <p><b>Телефон</b><a href="tel:+78120000000">+7 (812) 000-00-00</a></p>
+      <p><b>Почта</b><a href="mailto:hello@kofemanufaktura.example">hello@kofemanufaktura.example</a></p>
+      <p><b>Адрес</b>Санкт-Петербург, ул. Обжарочная, 12</p>
+      <p><b>Часы работы</b>Пн–Пт 9:00–19:00, Сб 10:00–16:00</p>
+    </div>
+    <form id="form">
+      <label>Имя<input name="name" required autocomplete="name"></label>
+      <label>Телефон<input name="phone" type="tel" required autocomplete="tel"></label>
+      <label>Сообщение<textarea name="msg" rows="4" placeholder="Опт или розница, какие сорта интересуют"></textarea></label>
+      <button class="btn" type="submit">Отправить заявку</button>
+      <p id="ok" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<a class="cart" id="cart" href="#contacts" hidden>В корзине: <span id="cnt">0</span></a>
+
+<!-- ===== 8. Подвал ===== -->
+<footer>
+  <div class="wrap">
+    <span>© 2026 Кофейная Мануфактура</span>
+    <nav><a href="#path">Путь зерна</a><a href="#catalog">Каталог</a><a href="#contacts">Контакты</a><a href="#top">Наверх</a></nav>
+  </div>
+</footer>
+
+<script>
+/* Данные каталога: название, ноты, вес, цена, подпись к фото */
+const coffees=[
+ ["Эфиопия Гуджи","жасмин, персик, чёрный чай","250 г",890,"зёрна светлой обжарки на белой ткани"],
+ ["Кения АА","чёрная смородина, грейпфрут","250 г",950,"красные ягоды кении и зёрна"],
+ ["Колумбия Уила","карамель, красное яблоко, орех","250 г",790,"плантация в Андах, колумбийский сбор"],
+ ["Бразилия Сантос","шоколад, фундук, сливочное тело","1 кг",2100,"мешок бразильского кофе в зёрнах"],
+ ["Гватемала Антигуа","какао, апельсин, лёгкий дым","250 г",820,"вулкан Антигуа и кофейные ряды"],
+ ["Дом-бленд","тёмный шоколад, сухофрукты","1 кг",1900,"пачка бленда на деревянной стойке"]
+];
+const grid=document.getElementById('grid');
+const menuToggle=document.querySelector('.menu-toggle');
+const mobileMenu=document.getElementById('mobile-menu');
+menuToggle.addEventListener('click',()=>{
+  const isOpen=menuToggle.getAttribute('aria-expanded')==='true';
+  menuToggle.setAttribute('aria-expanded',String(!isOpen));
+  menuToggle.setAttribute('aria-label',isOpen?'Открыть меню':'Закрыть меню');
+  mobileMenu.classList.toggle('open',!isOpen);
+});
+mobileMenu.addEventListener('click',e=>{
+  if(!e.target.closest('a')) return;
+  mobileMenu.classList.remove('open');
+  menuToggle.setAttribute('aria-expanded','false');
+  menuToggle.setAttribute('aria-label','Открыть меню');
+});
+coffees.forEach(([n,notes,w,p,cap])=>{
+  grid.insertAdjacentHTML('beforeend',`
+  <article class="card">
+    <!-- ИЗОБРАЖЕНИЕ: ${cap} -->
+    <div class="ph" role="img" aria-label="${n}: ${cap}"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="6" ry="9"/><path d="M12 3c-3 5 3 9 0 18"/></svg>Фото: ${cap}</div>
+    <div class="body"><h3>${n}</h3><p class="notes">${notes}</p>
+      <div class="meta"><span class="weight">${w}</span><span class="price">${p.toLocaleString('ru-RU')} ₽</span></div>
+      <button class="btn small add" type="button">В корзину</button></div>
+  </article>`);
+});
+/* Счётчик корзины */
+let count=0;const cart=document.getElementById('cart'),cnt=document.getElementById('cnt');
+grid.addEventListener('click',e=>{
+  const b=e.target.closest('.add'); if(!b) return;
+  cnt.textContent=++count; cart.hidden=false; b.textContent='Добавлено';
+  setTimeout(()=>b.textContent='В корзину',1200);
+});
+/* Отправка формы (демо: подключите свой бэкенд) */
+document.getElementById('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  document.getElementById('ok').textContent='Спасибо! Мы перезвоним в течение рабочего дня.';
+  e.target.reset();
+});
+</script>
+</body>
+</html>
