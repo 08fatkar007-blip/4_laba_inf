@@ -39,11 +39,8 @@ section{padding:4.5rem 0}
 .btn:hover{background:#e29d4f;transform:translateY(-2px);box-shadow:0 8px 20px rgba(208,138,60,.35)}
 .btn.small{padding:.5rem 1.1rem;font-size:.9rem}
 
-/* ===== Плейсхолдеры изображений ===== */
-.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;text-align:center;
-  background:repeating-linear-gradient(45deg,rgba(208,138,60,.12) 0 12px,rgba(208,138,60,.2) 12px 24px);
-  border:2px dashed var(--caramel);border-radius:16px;color:var(--muted);font-size:.8rem;padding:.8rem;width:100%}
-.ph svg{width:36px;height:36px;stroke:var(--caramel);fill:none;stroke-width:1.6}
+/* ===== Изображения ===== */
+.image{display:block;width:100%;object-fit:cover;border-radius:16px}
 
 /* ===== Навигация (фиксированная) ===== */
 .nav{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(43,24,16,.94);backdrop-filter:blur(8px);
@@ -63,7 +60,7 @@ section{padding:4.5rem 0}
 .hero p{color:#e7d6bd;max-width:46ch}
 .pack{max-width:300px;margin-inline:auto;aspect-ratio:3/4;transform:rotate(-3deg);transition:transform .4s}
 .pack:hover{transform:rotate(0) scale(1.03)}
-.pack .ph{height:100%;background-color:var(--brown-2);border-color:var(--caramel)}
+.pack .image{height:100%;border:2px solid var(--caramel)}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:3rem;list-style:none;padding:0}
 .stats li{aspect-ratio:1;max-width:150px;margin-inline:auto;width:100%;border:2px solid var(--caramel);border-radius:50%;
   display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.2;
@@ -77,7 +74,7 @@ section{padding:4.5rem 0}
 .step{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.2rem;position:relative}
 .step .num{position:absolute;top:-14px;left:1.2rem;background:var(--caramel);color:#2b1810;font:800 1.1rem var(--head);
   width:38px;height:38px;border-radius:50%;display:grid;place-items:center}
-.step .ph{height:140px;margin:.8rem 0 1rem}
+.step .image{height:140px;margin:.8rem 0 1rem}
 .step h3{font-size:1.4rem;margin-bottom:.3em}
 .step ul{margin:0;padding-left:1.1rem;color:var(--muted);font-size:.93rem}
 
@@ -96,7 +93,7 @@ section{padding:4.5rem 0}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;
   transition:transform .25s,box-shadow .25s}
 .card:hover{transform:translateY(-6px);box-shadow:0 16px 30px rgba(43,24,16,.18)}
-.card .ph{height:180px;border-radius:0;border-width:0 0 2px}
+.card .image{height:180px;border-radius:17px 17px 0 0;border-bottom:2px solid var(--caramel)}
 .card .body{padding:1.1rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
 .card h3{font-size:1.3rem;margin:0}
 .notes{color:var(--muted);font-size:.92rem;margin:0}
@@ -177,10 +174,7 @@ footer nav{display:flex;gap:1.2rem;flex-wrap:wrap}
     </div>
     <div class="pack">
       <!-- ИЗОБРАЖЕНИЕ: крафтовая пачка кофе 250 г с датой обжарки на этикетке, тёмный фон, мягкий боковой свет -->
-      <div class="ph" role="img" aria-label="Пачка свежеобжаренного кофе с датой обжарки на этикетке">
-        <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M5 8h14M9 13h6"/></svg>
-        Фото: крафтовая пачка 250 г с датой обжарки на этикетке
-      </div>
+      <img class="image" src="images/hero-pack.jpg" alt="Крафтовая пачка свежеобжаренного кофе 250 г" loading="lazy">
     </div>
     <ul class="stats">
       <li><b>12</b><span>стран-поставщиков</span></li>
@@ -199,22 +193,22 @@ footer nav{display:flex;gap:1.2rem;flex-wrap:wrap}
     <ol class="steps">
       <li class="step"><span class="num">1</span>
         <!-- ИЗОБРАЖЕНИЕ: склон плантации, сборщик с корзиной спелых красных ягод -->
-        <div class="ph" role="img" aria-label="Кофейная плантация на склоне, сборщик с корзиной ягод"><svg viewBox="0 0 24 24"><path d="M3 20l6-9 4 5 3-4 5 8z"/></svg>Фото: плантация, ручной сбор</div>
+        <img class="image" src="images/beans.jpg" alt="Кофейные зёрна, собранные для свежей обжарки" loading="lazy">
         <h3>Плантация</h3>
         <ul><li>Ягоды собирают вручную, только спелые.</li><li>Высота участков от 1200 до 2000 м.</li></ul></li>
       <li class="step"><span class="num">2</span>
         <!-- ИЗОБРАЖЕНИЕ: барабан печи с горячими зёрнами, пар -->
-        <div class="ph" role="img" aria-label="Обжарочная печь с горячими зёрнами"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Фото: печь, зёрна в момент выгрузки</div>
+        <img class="image" src="images/roastery.jpg" alt="Обжарочное оборудование кофейной мануфактуры" loading="lazy">
         <h3>Обжарка</h3>
         <ul><li>Партии по 12 кг, профиль под каждый сорт.</li><li>Дегустируем каждую партию.</li></ul></li>
       <li class="step"><span class="num">3</span>
         <!-- ИЗОБРАЖЕНИЕ: руки упаковщика, клапан дегазации, наклейка с датой -->
-        <div class="ph" role="img" aria-label="Упаковка зёрен в пачку с клапаном и датой обжарки"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 7V4h8v3"/></svg>Фото: пачка с клапаном и наклейкой даты</div>
+        <img class="image" src="images/hero-pack.jpg" alt="Пачка кофе с клапаном для сохранения свежести зёрен" loading="lazy">
         <h3>Упаковка</h3>
         <ul><li>Клапан выпускает газ, но не пускает воздух.</li><li>На пачке указана дата обжарки.</li></ul></li>
       <li class="step"><span class="num">4</span>
         <!-- ИЗОБРАЖЕНИЕ: чашка чёрного кофе на деревянном столе, утренний свет -->
-        <div class="ph" role="img" aria-label="Чашка свежесваренного кофе на деревянном столе"><svg viewBox="0 0 24 24"><path d="M5 9h12v5a5 5 0 01-5 5h-2a5 5 0 01-5-5zM17 10h2a2 2 0 010 4h-2"/></svg>Фото: чашка кофе, утренний свет</div>
+        <img class="image" src="images/beans.jpg" alt="Кофейные зёрна для приготовления свежей чашки кофе" loading="lazy">
         <h3>Ваша чашка</h3>
         <ul><li>Лучший вкус: со 4-го по 21-й день после обжарки.</li><li>Мелите прямо перед заваркой.</li></ul></li>
     </ol>
@@ -303,7 +297,7 @@ coffees.forEach(([n,notes,w,p,cap])=>{
   grid.insertAdjacentHTML('beforeend',`
   <article class="card">
     <!-- ИЗОБРАЖЕНИЕ: ${cap} -->
-    <div class="ph" role="img" aria-label="${n}: ${cap}"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="6" ry="9"/><path d="M12 3c-3 5 3 9 0 18"/></svg>Фото: ${cap}</div>
+    <img class="image" src="images/beans.jpg" alt="${n}: кофейные зёрна" loading="lazy">
     <div class="body"><h3>${n}</h3><p class="notes">${notes}</p>
       <div class="meta"><span class="weight">${w}</span><span class="price">${p.toLocaleString('ru-RU')} ₽</span></div>
       <button class="btn small add" type="button">В корзину</button></div>
