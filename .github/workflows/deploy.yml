@@ -1,4 +1,4 @@
-# Workflow автоматической публикации статического сайта на GitHub Pages.
+## Workflow: проверка HTML (линтинг) и автоматическая публикация сайта на GitHub Pages.
 name: Deploy static site
 
 # Триггер: запуск при каждом push в ветку main
@@ -13,27 +13,40 @@ permissions:
   id-token: write
 
 jobs:
+  # Задание 1. Проверка качества HTML-кода
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Lint HTML (htmlhint)
+        run: npx --yes htmlhint index.html
+
+  # Задание 2. Публикация сайта (только если lint прошёл успешно)
   deploy:
+    needs: lint
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      # Шаг 1. Скопировать файлы репозитория на виртуальную машину
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Шаг 2. Подготовить окружение GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # Шаг 3. Упаковать файлы сайта в артефакт
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
 
-      # Шаг 4. Опубликовать артефакт на GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
