@@ -2,9 +2,7 @@
 
 Статический сайт небольшой обжарочной с автоматическим развёртыванием через GitHub Actions.
 
-![Deploy static site](https://github.com/08fatkar007-blip/4_laba_inf/actions/workflows/deploy.yml/badge.svg)
-
-**Сайт:** https://08fatkar007-blip.github.io/4_laba_inf/
+   ![Deploy static site](https://github.com/08fatkar007-blip/4_laba_inf/actions/workflows/deploy.yml/badge.svg?branch=main)
 
 ## Как работает автодеплой
 
